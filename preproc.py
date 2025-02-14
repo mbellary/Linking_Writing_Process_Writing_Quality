@@ -247,7 +247,7 @@ def key_stroke_feats(df):
                            .pipe(key_stroke_feats))
 
 if __name__ == '__main__':
-parser = argparse.ArgumentParser(description='Preprocess training data')
-parser.add_argument('--dir_path', metavar='path', required=True, help='the path to data files')
-args = parser.parse_args()
-main(args.dir_path)
+	parser = argparse.ArgumentParser(description='Preprocess training data')
+	parser.add_argument('--dir_path', metavar='path', required=True, help='the path to data files')
+	args = parser.parse_args()
+	main(args.dir_path)
