@@ -221,7 +221,7 @@ def key_stroke_feats(df):
                                 (pl.col("key_pressed_2") / ((pl.col('max_up_time') - (pl.col(min_down_time))) / 1000 )).alias('keys_per_second')))
 
 
- def main(dir_path):
+ def preprocessor(dir_path):
  	train_df = pl.scan_csv(dir_path + 'dataset/linking-writing-processes-to-writing-quality/train_logs.csv')
  	df_pandas = pd.read_csv(dir_path + 'dataset/linking-writing-processes-to-writing-quality/train_logs.csv')
 	train_essays = get_essay_df(df_pandas)
@@ -245,9 +245,10 @@ def key_stroke_feats(df):
                            .pipe(get_essay_stats, feat_cols=['word_len', 'sent_len', 'sent_word_len', 'para_len'])
                            .join(train_df, on="id")
                            .pipe(key_stroke_feats))
+    return train_essays
 
 if __name__ == '__main__':
 	parser = argparse.ArgumentParser(description='Preprocess training data')
 	parser.add_argument('--dir_path', metavar='path', required=True, help='the path to data files')
 	args = parser.parse_args()
-	main(args.dir_path)
+	preprocessor(args.dir_path)
