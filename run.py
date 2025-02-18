@@ -25,7 +25,7 @@ def run(dir_path, scores_path):
 	X = train_data.drop(['id', 'score']).collect().to_pandas()
 	y = train_data['score'].collect().to_pandas().values
 	skf = StratifiedKFold(n_splits=5, random_state=random_state, shuffle=True)
-	preds = np.zeros(x.shape[0], 5)
+	preds = np.zeros(X.shape[0], 5)
 	for train_idx , valid_idx in skf.split(X, y.astype(str)):
 		X_train, y_train = train_data[train_idx], train_data[train_idx]
 		X_valid, y_valid = train_data[valid_idx], train_data[valid_idx]
@@ -41,4 +41,3 @@ if __name__ == '__main__':
 	args = parser.parse_args()
 	run(args.dir_path, args.scores_path)
 
-	
